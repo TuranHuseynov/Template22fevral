@@ -1,0 +1,170 @@
+﻿@model IEnumerable<MyNewTemplate.Models.Employee>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+
+        <!-- BEGIN PAGE HEADER-->
+        <h3 class="page-title">
+            Employee
+        </h3>
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a href="/Admin/Index">Home</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="#">Employee</a>
+                    <i class="fa "></i>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE HEADER-->
+        <!-- BEGIN PAGE CONTENT-->
+        <div id="load">
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <a class="btn green" data-toggle="modal" href="/Employee/Create">
+                    Add New Employee
+                    <i class="fa fa-plus"></i>
+                </a>
+            </div>
+            <div class="col-md-6 form-group text-right">
+
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                <div class="portlet box blue">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-trophy"></i>Employee List
+                        </div>
+                        <div class="tools">
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+
+                        <table class="table table-striped table-bordered table-hover" id="awards">
+                            <thead>
+                                <tr>
+                                    <th> @Html.DisplayNameFor(model => model.emp_fullname)</th>
+                                    <th> @Html.DisplayNameFor(model => model.emp_photo)</th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Departament.depart_name) /
+                                        @Html.DisplayNameFor(model => model.Designation.desig_name)
+                                    </th>
+                                    <th> @Html.DisplayNameFor(model => model.emp_date_of_joining)</th>
+                                    <th> @Html.DisplayNameFor(model => model.emp_phone) </th>
+                                    <th> @Html.DisplayNameFor(model => model.emp_work_status)</th>
+                                    <th> Action </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.emp_fullname)
+                                    </td>
+                                    <td>
+                                        <img src="~/Upload/Image/@item.emp_photo" style="width:150px;height:150px;" />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Departament.depart_name)<br />
+                                        @Html.DisplayFor(modelItem => item.Designation.desig_name)
+                                    </td>
+                                    <td>
+                                        @{
+            var year = 0;
+            var month = 0;
+            var day = 0;
+            DateTime time = DateTime.Parse(item.emp_date_of_joining.ToString());
+            DateTime now = DateTime.Parse(DateTime.Now.ToString());
+            if (time.Month > now.Month)
+            {
+                year = now.Year - time.Year - 1;
+                if (time.Day > now.Day)
+                {
+                    month = now.Month - time.Month + 12 - 1;
+                    if (now.Month == 01 || now.Month == 07 || now.Month == 05 || now.Month == 08 || now.Month == 10 || now.Month == 12)
+                    {
+                        day = now.Day - time.Day + 30;
+                    }
+                    else if (now.Month == 03)
+                    {
+                        day = now.Day - time.Day + 28;
+
+                    }
+                    else
+                    {
+                        day = now.Day - time.Day + 31;
+                    }
+                }
+                else
+                {
+                    month = now.Month - time.Month + 12;
+                    day = now.Day - time.Day;
+                }
+            }
+            else
+            {
+                year = now.Year - time.Year;
+                if (time.Day > now.Day)
+                {
+                    month = now.Month - time.Month - 1;
+                    if (now.Month == 01 || now.Month == 07 || now.Month == 05 || now.Month == 08 || now.Month == 10 || now.Month == 12)
+                    {
+                        day = now.Day - time.Day + 30;
+                    }
+                    else if (now.Month == 03)
+                    {
+                        day = now.Day - time.Day + 28;
+
+                    }
+                    else
+                    {
+                        day = now.Day - time.Day + 31;
+                    }
+                }
+                else
+                {
+                    month = now.Month - time.Month;
+                    day = now.Day - time.Day;
+                }
+            }
+                                        }
+                                        @year  year @month  month @day  day
+
+                                    </td>
+                                    <td> @Html.DisplayFor(modelItem => item.emp_phone) </td>
+                                    <td> @Html.DisplayFor(modelItem => item.emp_work_status) </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END EXAMPLE TABLE PORTLET-->
+            </div>
+        </div>
+        <!-- END PAGE CONTENT-->
+
+
+    </div>
+</div>
+
+

@@ -1,0 +1,22 @@
+﻿@model MyNewTemplate.Models.Employee
+<a href="/Login/LogUser" data-toggle="modal" data-target="#login-modal">Login</a>
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="loginmodal-container">
+            <h1>Login to Your Account</h1><br>
+            <form method="post" action="/Login/LogUser">
+                <input type="text" name="Emp_email" placeholder="UserEmail">
+                <input type="password" name="User_password" placeholder="Emp_password">
+                <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+            </form>
+
+
+            @if (ViewBag.message != null)
+            {
+                <label class="alert alert-warning">
+                    @ViewBag.message
+                </label>
+            }
+        </div>
+    </div>
+</div>
